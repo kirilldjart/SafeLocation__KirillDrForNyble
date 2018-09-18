@@ -1,11 +1,9 @@
-package com.kirilldrob.h7fragments.presentation;
+package com.kirilldrob.savelocation.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -16,11 +14,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.kirilldrob.h7fragments.R;
-import com.kirilldrob.h7fragments.network.CollectionsRepository;
-import com.kirilldrob.h7fragments.network.DataCallback;
-import com.kirilldrob.h7fragments.network.NetworkManager;
-
-import java.util.List;
+import com.kirilldrob.savelocation.network.CollectionsRepository;
+import com.kirilldrob.savelocation.network.DataCallback;
+import com.kirilldrob.savelocation.network.NetworkManager;
 
 public class MainActivity extends AppCompatActivity implements DataCallback {
     /**

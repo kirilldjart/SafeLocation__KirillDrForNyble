@@ -1,11 +1,5 @@
-package com.kirilldrob.h7fragments.network;
+package com.kirilldrob.savelocation.network;
 
-import android.content.Context;
-import android.widget.Toast;
-
-import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.net.URLEncoder;
 import java.util.List;
 
 

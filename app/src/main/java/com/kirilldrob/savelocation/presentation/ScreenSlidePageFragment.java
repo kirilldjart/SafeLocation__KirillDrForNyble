@@ -1,8 +1,7 @@
-package com.kirilldrob.h7fragments.presentation;
+package com.kirilldrob.savelocation.presentation;
 
 import android.os.Bundle;
 //import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kirilldrob.h7fragments.R;
-import com.kirilldrob.h7fragments.network.CollectionsRepository;
-import com.kirilldrob.h7fragments.network.CuratedCollection;
+import com.kirilldrob.savelocation.network.CollectionsRepository;
+import com.kirilldrob.savelocation.network.CuratedCollection;
 import com.squareup.picasso.Picasso;
 
 import androidx.fragment.app.Fragment;

@@ -1,4 +1,4 @@
-package com.kirilldrob.h7fragments.network;
+package com.kirilldrob.savelocation.network;
 
 import java.util.List;
 
