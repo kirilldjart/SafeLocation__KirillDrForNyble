@@ -1,8 +1,7 @@
 package com.kirilldrob.savelocation.presentation;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -10,17 +9,11 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Location;
+
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 
 import com.kirilldrob.h7fragments.R;
-
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,14 +21,10 @@ public class MainActivity extends AppCompatActivity {
      * The number of pages (wizard steps) to show in this demo.
      */
     private static final int NUM_PAGES = 2;
-    public static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-    private boolean mPermissionDenied = false;
-    /**
-     * The pager widget, which handles animation and allows swiping horizontally to access previous
-     * and next wizard steps.
-     */
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
+    public static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private boolean mPermissionDenied = false;
 
 
     @Override
@@ -43,26 +32,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         updatePagerUI();
-
-// 2 variant Create a tab listener that is called when the user changes tabs.
+        // Design: Таб полоска в Асtion баре!
+// 2 variant: Create a tab listener that is called when the user changes tabs.
 //        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
 //            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
 //                // When the tab is selected, switch to the
 //                // corresponding page in the ViewPager.
 //                mViewPager.setCurrentItem(tab.getPosition());
 //            }}
-/*
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);*/
-        // Instantiate a ViewPager and a PagerAdapter.
-//       if ( CollectionsRepository.getInstance().collectionList!=null)
-//           updatePagerUI();
-//       else NetworkManager.getInstance().getData(this);
-
     }
 
 
@@ -77,14 +54,6 @@ public class MainActivity extends AppCompatActivity {
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
         }
     }
-
-
-//    private void showErrorMessage(Context context) {
-//        //if (context == null) return;
-//        Toast.makeText(context, "Something went wrong :(\n Check internet connection", Toast.LENGTH_SHORT).show();
-//    }
-//----------------------------------
-
 
     private void updatePagerUI() {
 
@@ -109,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
             // Display the missing permission error dialog when the fragments resume.
             mPermissionDenied = true;
         }
-                    //... more beauty way
-            //    Fragment page = getSupportFragmentManager().findFragmentByTag("page1");
-            //  page.onRequestPermissionsResult(); --- and there  getLocationAndInflate(mRootView);
+        //... more beauty way
+        //    Fragment page = getSupportFragmentManager().findFragmentByTag("page1");
+        //  page.onRequestPermissionsResult(); --- and there  getLocationAndInflate(mRootView);
     }
 
     @Override
@@ -132,7 +101,9 @@ public class MainActivity extends AppCompatActivity {
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
     }
 
+
     //------------------------------------------------------------------
+
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -140,18 +111,19 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Fragment f=null;
-            if (position==0) f=NowPlacePageFragment.newInstance(position);
-            if (position==1) f=HistoryPageFragment.newInstance(null); //null- Опция: Подсветка текущего места в истории мест.
+            Fragment f = null;
+            if (position == 0) f = NowPlacePageFragment.newInstance(position);
+            if (position == 1)
+                f = HistoryPageFragment.newInstance(null); //null- Опция: Подсветка текущего места в истории мест.
 
             return f;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            String name=null;
-            if (position==0) name="You are here:";
-            if (position==1) name="Your previous places:";
+            String name = null;
+            if (position == 0) name = " You are here: ";
+            if (position == 1) name = " Your previous places: ";
             return name;
         }
 

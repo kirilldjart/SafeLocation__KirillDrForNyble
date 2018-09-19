@@ -40,5 +40,6 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$roomVersion"
    // implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     //implementation 'com.google.android:support-v4:r7'
-    implementation 'com.google.android.gms:play-services:12.0.0'
-    }
+        implementation 'com.google.android.gms:play-services-location:12.0.0' // 9.8.0 для тестов
+
+}

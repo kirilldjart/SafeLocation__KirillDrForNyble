@@ -7,10 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.widget.ImageView;
+
 import android.widget.TextView;
 
 import com.kirilldrob.h7fragments.R;
@@ -57,7 +57,7 @@ public class PlaceDetailsActivity extends AppCompatActivity {
 
         tvAddress.setText(intent.getStringExtra(EXTRA_ADDRESS));
         tvTime.setText(intent.getStringExtra(EXTRA_TIME)); // TODO: проверить отображение в нужной Локали.
-        tvTime.setText(DateFormat.format("dd-MM-yyyy/HH:mm",(long) intent.getLongExtra(EXTRA_TIME,0)).toString());
+        tvTime.setText(DateFormat.format("dd-MM-yyyy/HH:mm",((long) intent.getDoubleExtra(EXTRA_TIME,0))*1000).toString());
         tvLat.setText(String.valueOf( intent.getDoubleExtra(EXTRA_LAT,0)));
         tvLong.setText(String.valueOf( intent.getDoubleExtra(EXTRA_LONG,0)));
             //1. Опция: свое название(описание) места( Пример: "здесь очень вкусная пицца")

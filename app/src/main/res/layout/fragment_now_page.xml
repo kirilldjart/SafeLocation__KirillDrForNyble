@@ -2,63 +2,61 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:orientation="vertical"
     android:weightSum="10"
     tools:context="com.kirilldrob.savelocation.presentation.MainActivity">
 
     <TextView
-    android:text="Longitude:"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:paddingTop="16dp"
-    android:gravity="center"
-    android:layout_gravity="center"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingTop="16dp"
+        android:text="Longitude:" />
 
     <TextView
         android:id="@+id/tv_longitude"
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="wrap_content"
-     />
+        android:gravity="center" />
+
     <TextView
-        android:text="Latitude:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:layout_gravity="center"/>
+        android:paddingTop="16dp"
+        android:text="Latitude:" />
 
     <TextView
         android:id="@+id/tv_latitude"
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="wrap_content"
-        />
+        android:gravity="center" />
+
+    <!--android:hint="the altitude, in meters above the WGS 84 reference ellipsoid"-->
     <TextView
-        android:text="Altitude:"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="the altitude, in meters above the WGS 84 reference ellipsoid"
-        android:paddingTop="16dp"
         android:gravity="center"
-        android:layout_gravity="center"/>
+        android:paddingTop="16dp"
+        android:text="Altitude:" />
+
     <TextView
         android:id="@+id/tv_altitude"
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="wrap_content"
-        />
+        android:gravity="center" />
 
 
     <TextView
-        android:text="Address:"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="the altitude, in meters above the WGS 84 reference ellipsoid"
-        android:paddingTop="16dp"
         android:gravity="center"
-        android:layout_gravity="center"/>
+        android:paddingTop="16dp"
+        android:text="Address:" />
 
 
     <ScrollView
@@ -68,7 +66,8 @@
         <TextView
             android:id="@+id/tv_address"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center" />
     </ScrollView>
 
 </LinearLayout>

@@ -1,83 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="Data\time:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:gravity="center"
-        android:layout_gravity="center"/>
-    <TextView
-        android:id="@+id/tvD_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_gravity="center"/>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tvD_Layouttittle"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tvD_tittle"
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:text="Data\time:" />
+
+        <TextView
+            android:id="@+id/tvD_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvD_Layouttittle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tittle"
-            android:imeOptions="actionNext"
-            android:singleLine="true"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp">
 
-    <TextView
-        android:text="Address:"
-         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:gravity="center"
-        android:layout_gravity="center"/>
-    <TextView
-        android:id="@+id/tvD_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_gravity="center"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tvD_tittle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Title"
+                android:imeOptions="actionNext"
+                android:singleLine="true" />
 
-    <TextView
-        android:text="Longitude:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:gravity="center"
-        android:layout_gravity="center"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/tvD_longitude"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        />
-    <TextView
-        android:text="Latitude:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:gravity="center"
-        android:layout_gravity="center"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAddTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="4dp"
+            android:text="Add Title"
+            android:textColor="@android:color/white"
+            app:backgroundTint="@color/colorPrimary" />
 
-    <TextView
-        android:id="@+id/tvD_latitude"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:text="Address:" />
+
+        <TextView
+            android:id="@+id/tvD_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:text="Longitude:" />
+
+        <TextView
+            android:id="@+id/tvD_longitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:text="Latitude:" />
+
+        <TextView
+            android:id="@+id/tvD_latitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" />
+
+    </LinearLayout>
+</ScrollView>

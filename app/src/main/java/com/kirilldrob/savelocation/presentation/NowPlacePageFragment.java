@@ -168,8 +168,10 @@ public class NowPlacePageFragment extends Fragment {
             ((TextView) mRootView.findViewById(R.id.tv_address)).setText(addressOutput);
             //-- HISTORY
             Note note = createNote(addressOutput, mLocation.getLongitude(), mLocation.getLatitude(), ""); //tittle will be in Detail screen
+
+            //TODO Опция удаления ДУБЛИКАТОВ  - ОТключена для наглядности RecyclerView, чтобы не бегать по району при тестах;)
             // if (AppDatabase.getInstance(getContext()).noteDao().getNoteByAddress(addressOutput)!=null) return;
-            AppDatabase.getInstance(getContext()).noteDao().insert(note);
+                  AppDatabase.getInstance(getContext()).noteDao().insert(note);
 
 
         }

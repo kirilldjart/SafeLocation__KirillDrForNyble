@@ -5,8 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+
 
 import com.kirilldrob.h7fragments.R;
 import com.kirilldrob.savelocation.db.AppDatabase;
@@ -14,18 +13,16 @@ import com.kirilldrob.savelocation.db.Note;
 
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-//import android.support.v4.app.Fragment;
 
 public class HistoryPageFragment extends Fragment
-        implements NotesAdapter.NotesAdapterInteraction{
+        implements NotesAdapter.NotesAdapterInteraction {
 
+    private NotesAdapter mNotesAdapter;
 
     static final String ARGUMENT_ID = "arg_id";
     int pageNumber;
@@ -41,71 +38,18 @@ public class HistoryPageFragment extends Fragment
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_history_page, container, false);
-//        if (CollectionsRepository.getInstance().collectionList != null) {
-//            //  Log.d("MyFragment",  String.valueOf(CollectionsRepository.getInstance().collectionList.get(pageNumber)));
-//            CuratedCollection collection = CollectionsRepository.getInstance().collectionList.get(pageNumber);
-//                ((TextView) rootView.findViewById(R.id.tv_description)).setText(collection.description);
-//                ((TextView) rootView.findViewById(R.id.tv_tittle)).setText(collection.title);
-//              //  Picasso.get().load(collection.coverPhoto.urls.small).into((ImageView) rootView.findViewById(R.id.imageView));
-//        }
-       // setViews(rootView);
-        setRecyclerView( rootView);
 
-
+        setRecyclerView(rootView);
         return rootView;
     }
 
     static HistoryPageFragment newInstance(Note currentPlace) {
         HistoryPageFragment pageFragment = new HistoryPageFragment();
-        if (currentPlace==null)return pageFragment;
-        Bundle arguments = new Bundle();
+        if (currentPlace == null) return pageFragment;
+        Bundle arguments = new Bundle(); //Опция для подсветки выбранного
         arguments.putInt(ARGUMENT_ID, currentPlace.getId());
         pageFragment.setArguments(arguments);
         return pageFragment;
-    }
-
-
-
-
-    private NotesAdapter mNotesAdapter;
-    private Button mBtnAddNote;
-    private EditText mEtTitle;
-    private EditText mEtBody;
-
-
-
-//    private void setViews(View rootView) {
-//        mBtnAddNote = rootView.findViewById(R.id.btnAddNote);
-//        mEtTitle = rootView.findViewById(R.id.etTitle);
-//        mEtBody = rootView.findViewById(R.id.etBody);
-
-
-//    }
-
-   // private void addNote() {
-       // String title = mEtTitle.getText().toString();
-//        String body = mEtBody.getText().toString();
-//        Note note = createNote(title, body);
-//
-//        AppDatabase.getInstance(getContext()).noteDao().insert(note);
-//
-//        mEtTitle.getText().clear();
-//        mEtTitle.requestFocus();
-//        mEtBody.getText().clear();
-
-//        List<Note> updatedList = getNoteList();
-//        mNotesAdapter.updateList(updatedList);
-  //  }
-
-
-
-
-
-
-    @Override
-    public void onClickItem(Note note) {
-        PlaceDetailsActivity.start(getContext(),note);
-//startActivity(intent);
     }
 
     @Override
@@ -113,6 +57,14 @@ public class HistoryPageFragment extends Fragment
         super.onResume();
         mNotesAdapter.updateList(getNoteList());
     }
+
+    // NotesAdapter.NotesAdapterInteraction interface methods
+    @Override
+    public void onClickItem(Note note) {
+        PlaceDetailsActivity.start(getContext(), note);
+    }
+
+
 
     @Override
     public void onDestroy() {
@@ -124,10 +76,12 @@ public class HistoryPageFragment extends Fragment
         RecyclerView recyclerView = rootView.findViewById(R.id.recyclerView);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         mNotesAdapter = new NotesAdapter(this, getNoteList());
-        Log.d("saveLocationSize",String.valueOf(getNoteList().size()));
+        Log.d("saveLocationSize", String.valueOf(getNoteList().size()));
         recyclerView.setAdapter(mNotesAdapter);
     }
 
@@ -135,7 +89,7 @@ public class HistoryPageFragment extends Fragment
         return AppDatabase.getInstance(getContext()).noteDao().getAll();
 
     }
-
+//  Опция для будущего!
     // NotesAdapter.NotesAdapterInteraction interface methods
 //    @Override
 //    public void onDeleteNote(Note note) {
