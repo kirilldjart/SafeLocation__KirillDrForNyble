@@ -42,6 +42,9 @@ public class FetchAddressIntentService extends IntentService {
         // Get the location passed to this service through an extra.
         Location location = intent.getParcelableExtra(
                 Constants.LOCATION_DATA_EXTRA);
+         mReceiver = intent.getParcelableExtra(
+                Constants.RECEIVER);
+
         List<Address> addresses = null;
 
         try {
@@ -53,7 +56,7 @@ public class FetchAddressIntentService extends IntentService {
         } catch (IOException ioException) {
             // Catch network or other I/O problems.
             errorMessage = "string.service_not_available";
-            Log.e(TAG, errorMessage, ioException);
+            Log.d(TAG, errorMessage, ioException);
         } catch (IllegalArgumentException illegalArgumentException) {
             // Catch invalid latitude or longitude values.
             errorMessage = "invalid_lat_long_used";
@@ -91,7 +94,14 @@ public class FetchAddressIntentService extends IntentService {
     private void deliverResultToReceiver(int resultCode, String message) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.RESULT_DATA_KEY, message);
-        mReceiver.send(resultCode, bundle);
+        if (mReceiver!=null)mReceiver.send(resultCode, bundle);
+
     }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        mReceiver=null;
+        return super.onUnbind(intent);
+       }
 }
 

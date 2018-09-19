@@ -1,6 +1,7 @@
 package com.kirilldrob.savelocation.presentation;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ public class HistoryPageFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageNumber = getArguments().getInt(ARGUMENT_ID);
+//        pageNumber = getArguments().getInt(ARGUMENT_ID);
     }
 
     @Override
@@ -56,6 +57,7 @@ public class HistoryPageFragment extends Fragment
 
     static HistoryPageFragment newInstance(Note currentPlace) {
         HistoryPageFragment pageFragment = new HistoryPageFragment();
+        if (currentPlace==null)return pageFragment;
         Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_ID, currentPlace.getId());
         pageFragment.setArguments(arguments);
@@ -80,7 +82,7 @@ public class HistoryPageFragment extends Fragment
 
 //    }
 
-    private void addNote() {
+   // private void addNote() {
        // String title = mEtTitle.getText().toString();
 //        String body = mEtBody.getText().toString();
 //        Note note = createNote(title, body);
@@ -93,18 +95,9 @@ public class HistoryPageFragment extends Fragment
 
 //        List<Note> updatedList = getNoteList();
 //        mNotesAdapter.updateList(updatedList);
-    }
+  //  }
 
-    @NonNull
-    private Note createNote(String address,double longitude, double latitude, String title) {
-        Note note = new Note();
-        note.setTitle(title); // Опция!
-        note.setAddress(address);
-        note.setLatitude(latitude);
-        note.setLongitude(longitude);
-        note.setTimestamp((double) TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
-        return note;
-    }
+
 
 
 
@@ -115,7 +108,11 @@ public class HistoryPageFragment extends Fragment
 //startActivity(intent);
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        mNotesAdapter.updateList(getNoteList());
+    }
 
     @Override
     public void onDestroy() {
@@ -130,11 +127,13 @@ public class HistoryPageFragment extends Fragment
         recyclerView.setLayoutManager(linearLayoutManager);
 
         mNotesAdapter = new NotesAdapter(this, getNoteList());
+        Log.d("saveLocationSize",String.valueOf(getNoteList().size()));
         recyclerView.setAdapter(mNotesAdapter);
     }
 
     private List<Note> getNoteList() {
         return AppDatabase.getInstance(getContext()).noteDao().getAll();
+
     }
 
     // NotesAdapter.NotesAdapterInteraction interface methods
@@ -142,11 +141,4 @@ public class HistoryPageFragment extends Fragment
 //    public void onDeleteNote(Note note) {
 //        AppDatabase.getInstance(this).noteDao().delete(note);
 //    }
-}
-
-
-
-
-
-
 }

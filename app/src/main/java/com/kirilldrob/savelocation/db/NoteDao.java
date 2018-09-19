@@ -17,6 +17,9 @@ public interface NoteDao {
     @Query("SELECT * FROM Note WHERE id = :id")
     Note getNoteById(int id);
 
+    @Query("SELECT * FROM Note WHERE address = :address")
+    Note getNoteByAddress(String address);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Note... notes);
 

@@ -51,7 +51,14 @@
         />
 
 
-
+    <TextView
+        android:text="Address:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="the altitude, in meters above the WGS 84 reference ellipsoid"
+        android:paddingTop="16dp"
+        android:gravity="center"
+        android:layout_gravity="center"/>
 
 
     <ScrollView

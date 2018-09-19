@@ -19,9 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.kirilldrob.savelocation.presentation.PlaceDetailsActivity"/>
 
         <service
-            android:name=".FetchAddressIntentService"
+            android:name="com.kirilldrob.savelocation.services.FetchAddressIntentService"
             android:exported="false" />
         <service
             android:name="com.kirilldrob.savelocation.services.FetchAddressIntentService"

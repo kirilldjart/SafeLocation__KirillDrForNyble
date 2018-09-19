@@ -26,6 +26,7 @@ public class PlaceDetailsActivity extends AppCompatActivity {
     private static final String EXTRA_TIME ="time";
     public  TextView tvTime;
     public  TextView tvAddress;
+    public  TextView tvTittle;
     public  TextView tvLong;
     public  TextView tvLat;
 
@@ -35,7 +36,7 @@ public class PlaceDetailsActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_TITLE, note.getTitle()); // опция!
         intent.putExtra(EXTRA_LAT, note.getLatitude());
         intent.putExtra(EXTRA_LONG, note.getLongitude());
-       // intent.putExtra(EXTRA_TIME, ) а надо ли?
+        intent.putExtra(EXTRA_TIME, note.getTimestamp());  /// а надо ли?
 
 
         context.startActivity(intent);
@@ -45,33 +46,33 @@ public class PlaceDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        //--- Update Screen
+        tvTime = findViewById(R.id.tvD_time);
+        tvAddress = findViewById(R.id.tvD_address);
+        tvTittle = findViewById(R.id.tvD_tittle);
+        tvLong = findViewById(R.id.tvD_longitude);
+        tvLat = findViewById(R.id.tvD_latitude);
 
         Intent intent = getIntent();
-        String fullName = intent.getStringExtra(EXTRA_ADDRESS);
-        //tvTime.setText(DateFormat.format("dd-MM-yyyy/HH:mm",(long) mNoteList.get(position).getTimestamp() * 1000).toString());
-        holder.tvAddress.setText(mNoteList.get(position).getAddress());
-        holder.tvLat.setText(String.valueOf(mNoteList.get(position).getLatitude()));
-        holder.tvLong.setText(String.valueOf(mNoteList.get(position).getLongitude()));
-        intent.getExtra(EXTRA_ADDRESS, note.getAddress());
-        intent.Extra(EXTRA_TITLE, note.getTitle()); // опция!
-        intent.putExtra(EXTRA_LAT, note.getLatitude());
-        intent.putExtra(EXTRA_LONG, note.getLongitude());
+
+        tvAddress.setText(intent.getStringExtra(EXTRA_ADDRESS));
+        tvTime.setText(intent.getStringExtra(EXTRA_TIME)); // TODO: проверить отображение в нужной Локали.
+        tvTime.setText(DateFormat.format("dd-MM-yyyy/HH:mm",(long) intent.getLongExtra(EXTRA_TIME,0)).toString());
+        tvLat.setText(String.valueOf( intent.getDoubleExtra(EXTRA_LAT,0)));
+        tvLong.setText(String.valueOf( intent.getDoubleExtra(EXTRA_LONG,0)));
+            //1. Опция: свое название(описание) места( Пример: "здесь очень вкусная пицца")
+        String tittle=intent.getStringExtra(EXTRA_TITLE);
+        if (tittle!=null) tvTittle.setText(tittle);
+        //--- end Update Screen  ...
 
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
             ab.setDisplayHomeAsUpEnabled(true);
-            ab.setTitle(fullName);
+            ab.setTitle("Place from the History");
         }
-        tvTime = findViewById(R.id.tv_time);
-        tvAddress = findViewById(R.id.tv_address);
-        tvLong = findViewById(R.id.tv_longitude);
-        tvLat = findViewById(R.id.tv_latitude);
 
-//        Glide.with(this).load(avatar).apply(new RequestOptions()
-//                .placeholder(R.drawable.avatar_default_details)
-//                .fallback(R.drawable.avatar_default_details)
-//                .centerCrop()).into(photoView);
-//        wikiInfoView.setText(wikiArticle);
+
+
     }
 
     @Override

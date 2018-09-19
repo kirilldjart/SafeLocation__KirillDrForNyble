@@ -1,5 +1,6 @@
 package com.kirilldrob.savelocation.presentation;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -19,7 +20,7 @@ import android.widget.Toast;
 
 
 import com.kirilldrob.h7fragments.R;
-import com.kirilldrob.savelocation.network.CollectionsRepository;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -43,7 +44,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         updatePagerUI();
 
-
+// 2 variant Create a tab listener that is called when the user changes tabs.
+//        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+//            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+//                // When the tab is selected, switch to the
+//                // corresponding page in the ViewPager.
+//                mViewPager.setCurrentItem(tab.getPosition());
+//            }}
 /*
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -55,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 //       if ( CollectionsRepository.getInstance().collectionList!=null)
 //           updatePagerUI();
 //       else NetworkManager.getInstance().getData(this);
-
 
     }
 
@@ -72,27 +78,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * A simple pager adapter that represents 5 NowPlacePageFragment objects, in
-     * sequence.
-     */
 
-//// ----- Network interaface
-//    @Override
-//    public void onDataReady() {
-//        updatePagerUI();
+//    private void showErrorMessage(Context context) {
+//        //if (context == null) return;
+//        Toast.makeText(context, "Something went wrong :(\n Check internet connection", Toast.LENGTH_SHORT).show();
 //    }
-//
-//    @Override
-//    public void onError(String msg) {
-//        showErrorMessage(this);
-//
-//
-//    }
-    private void showErrorMessage(Context context) {
-        //if (context == null) return;
-        Toast.makeText(context, "Something went wrong :(\n Check internet connection", Toast.LENGTH_SHORT).show();
-    }
 //----------------------------------
 
 
@@ -102,33 +92,7 @@ public class MainActivity extends AppCompatActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-//        mPager.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//               Log.d("Main", CollectionsRepository.getInstance().collectionList.get(mPager.getCurrentItem()).toString()); //.currentUserCollections.get(5)
-//            }
-//        });
 
-                               /* mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-                                    @Override
-                                    public void onPageSelected(int position) {
-                                        Log.d("MainActivity", "onPageSelected, position = " + position);
-                                    }
-                                });*/
-
-                        /*saveData(filmList);
-
-                        findViewById(R.id.pb_am_loading).setVisibility(View.GONE);
-
-                        RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
-                        recyclerView.setVisibility(View.VISIBLE);
-                        recyclerView.setHasFixedSize(true);
-
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
-                        recyclerView.setLayoutManager(layoutManager);
-
-                        MyAdapter adapter = new MyAdapter(filmList, MainActivity.this);
-                        recyclerView.setAdapter(adapter);*/
     }
 
     @Override
@@ -176,12 +140,24 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return NowPlacePageFragment.newInstance(position);
+            Fragment f=null;
+            if (position==0) f=NowPlacePageFragment.newInstance(position);
+            if (position==1) f=HistoryPageFragment.newInstance(null); //null- Опция: Подсветка текущего места в истории мест.
+
+            return f;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            String name=null;
+            if (position==0) name="You are here:";
+            if (position==1) name="Your previous places:";
+            return name;
         }
 
         @Override
         public int getCount() {
-            return CollectionsRepository.getInstance().collectionList.size();
+            return NUM_PAGES;
         }
     }
 

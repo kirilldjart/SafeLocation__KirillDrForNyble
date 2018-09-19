@@ -7,7 +7,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.ResultReceiver;
+
+import android.support.v4.os.ResultReceiver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +21,13 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.kirilldrob.h7fragments.R;
+import com.kirilldrob.savelocation.db.AppDatabase;
+import com.kirilldrob.savelocation.db.Note;
 import com.kirilldrob.savelocation.services.Constants;
 import com.kirilldrob.savelocation.services.FetchAddressIntentService;
 
+
+import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,7 +54,7 @@ public class NowPlacePageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
+        // pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
     }
 
     @Override
@@ -59,7 +64,7 @@ public class NowPlacePageFragment extends Fragment {
                 R.layout.fragment_now_page, container, false);
 
         getLocationAndInflate(rootView);
-        mRootView=rootView;
+        mRootView = rootView;
         return rootView;
     }
 
@@ -82,8 +87,10 @@ public class NowPlacePageFragment extends Fragment {
                                         R.string.no_geocoder_available,
                                         Toast.LENGTH_LONG).show();
                                 return;
+                            } else {
+                                mLocation = location;
+                                startIntentService(location);
                             }
-                            startIntentService(location);
 
                         }
                     }
@@ -92,6 +99,7 @@ public class NowPlacePageFragment extends Fragment {
 
     protected void startIntentService(Location location) {
         Intent intent = new Intent(getContext(), FetchAddressIntentService.class);
+        if (mResultReceiver==null) mResultReceiver=new AddressResultReceiver(new Handler());
         intent.putExtra(Constants.RECEIVER, mResultReceiver);
         intent.putExtra(Constants.LOCATION_DATA_EXTRA, location);
         getContext().startService(intent);
@@ -126,18 +134,19 @@ public class NowPlacePageFragment extends Fragment {
         }
     }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-//                                           @NonNull int[] grantResults) {
-//        if (PermissionUtils.isPermissionGranted(permissions, grantResults,
-//                Manifest.permission.ACCESS_FINE_LOCATION)) {
-//            // Enable the my location layer if the permission has been granted.
-//            getLocationAndInflate(mRootView);
-//        } else {
-//            // Display the missing permission error dialog when the fragments resume.
-//            mPermissionDenied = true;
-//        }
-//    }
+
+
+
+    @NonNull
+    private Note createNote(String address, double longitude, double latitude, String title) {
+        Note note = new Note();
+        note.setTitle(title); // Опция!
+        note.setAddress(address);
+        note.setLatitude(latitude);
+        note.setLongitude(longitude);
+        note.setTimestamp((double) TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
+        return note;
+    }
 
 
     class AddressResultReceiver extends ResultReceiver {
@@ -147,22 +156,24 @@ public class NowPlacePageFragment extends Fragment {
 
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
-
-            if (resultData == null) {
-                return;
-            }
-            // Display the address string
-            // or an error message sent from the intent service.
-            String addressOutput = resultData.getString(Constants.RESULT_DATA_KEY);
-            if (addressOutput == null) {
-                addressOutput = "";
+            String addressOutput = "";
+            if (resultData != null) {
+                // Display the address string
+                // or an error message sent from the intent service.
+                addressOutput = resultData.getString(Constants.RESULT_DATA_KEY);
+                if (addressOutput == null) {
+                    addressOutput = "";
+                }
             }
             ((TextView) mRootView.findViewById(R.id.tv_address)).setText(addressOutput);
+            //-- HISTORY
+            Note note = createNote(addressOutput, mLocation.getLongitude(), mLocation.getLatitude(), ""); //tittle will be in Detail screen
+            // if (AppDatabase.getInstance(getContext()).noteDao().getNoteByAddress(addressOutput)!=null) return;
+            AppDatabase.getInstance(getContext()).noteDao().insert(note);
+
 
         }
     }
-
-
 
 
 }
