@@ -90,7 +90,7 @@ public class FetchAddressIntentService extends IntentService {
     }
 
 
-    // -----------------
+    // ----------------- localbroadcast - альтернатива
     private void deliverResultToReceiver(int resultCode, String message) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.RESULT_DATA_KEY, message);
@@ -98,10 +98,16 @@ public class FetchAddressIntentService extends IntentService {
 
     }
 
+//    @Override    //если использовать bindService()
+//    public boolean onUnbind(Intent intent) {
+//        mReceiver=null;
+//        return super.onUnbind(intent);
+//       }
+
     @Override
-    public boolean onUnbind(Intent intent) {
+    public void onDestroy() {
         mReceiver=null;
-        return super.onUnbind(intent);
-       }
+        super.onDestroy();
+    }
 }
 
